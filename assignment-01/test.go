@@ -44,12 +44,14 @@ func orderTheName(args []string) (string, error) {
 	lastName := args[1]
 	middleName := ""
 	country := ""
+	lengthAgrs := len(args)
 
-	if len(args) == 3 {
+	if lengthAgrs == 3 {
 		country = args[2]
 	} else {
-		middleName = args[2]
-		country = args[3]
+		var midLength = lengthAgrs - 1
+		middleName = strings.Join(args[2:midLength], " ")
+		country = args[midLength]
 	}
 
 	if len(country) != 2 {
@@ -70,11 +72,6 @@ func main() {
 	argsWithoutProg := os.Args[1:]
 	if len(argsWithoutProg) < 3 {
 		printError(makeError("Not enough arguments\nOnly accept 3 or 4 arguments"))
-		return
-	}
-
-	if len(argsWithoutProg) > 4 {
-		printError(makeError("Provided wrong arguments\nOnly accept 3 or 4 arguments"))
 		return
 	}
 
